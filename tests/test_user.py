@@ -37,7 +37,7 @@ def test_create_user_with_valid_email():
         "email": "dk@mail.com"
     }
 
-    response = client.post("/api/v1/user", params={new_user})
+    response = client.post("/api/v1/user", params=new_user)
     assert response.status_code == 201
     assert isinstance(response.json(), int)
 
@@ -47,7 +47,7 @@ def test_create_user_with_invalid_email():
         'name': 'Petr Petrov',
         'email': 'p.p.petrov@mail.com',
     }
-    response = client.post("/api/v1/user", params={new_user})
+    response = client.post("/api/v1/user", params=new_user)
     assert response.status_code == 409
     assert response.detail == "User with this email already exists"
 
