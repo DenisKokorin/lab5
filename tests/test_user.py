@@ -33,7 +33,7 @@ def test_get_unexisted_user():
 
 def test_create_user_with_valid_email():
     '''Создание пользователя с уникальной почтой'''
-    user = CreateUser(name="denis", email="dk@mail.com")
+    user = CreateUser(name="denis", email="dik@mail.com")
     response = client.post("/api/v1/user", json=user.model_dump())
     assert response.status_code == 201
     assert isinstance(response.json(), int)
