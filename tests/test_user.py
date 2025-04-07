@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-
+from src.schemas.user import CreateUser
 from src.main import app
 
 client = TestClient(app)
@@ -32,10 +32,7 @@ def test_get_unexisted_user():
 
 def test_create_user_with_valid_email():
     '''Создание пользователя с уникальной почтой'''
-    new_user = {
-        "name": "Denis",
-        "email": "dk@mail.com"
-    }
+    new_user = CreateUser(name="Denis", email="dk@mail.com")
 
     response = client.post("/api/v1/user", params=new_user)
     assert response.status_code == 201
@@ -43,10 +40,8 @@ def test_create_user_with_valid_email():
 
 def test_create_user_with_invalid_email():
     '''Создание пользователя с почтой, которую использует другой пользователь'''
-    new_user = {
-        'name': 'Petr Petrov',
-        'email': 'p.p.petrov@mail.com',
-    }
+    new_user = CreateUser(name="Petr Petrov", email="p.p.petrov@mail.com")
+
     response = client.post("/api/v1/user", params=new_user)
     assert response.status_code == 409
     assert response.detail == "User with this email already exists"
